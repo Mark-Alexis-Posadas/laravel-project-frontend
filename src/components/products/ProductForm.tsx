@@ -104,40 +104,55 @@ export default function ProductForm({
           </button>
         </div>
 
-        <input
-          name="name"
-          placeholder="Product name"
-          value={form.name}
-          onChange={handleChange}
-          className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-        />
+        <div>
+          <label className="block text-sm text-zinc-400 mb-1">
+            Product Name
+          </label>
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
+          />
+        </div>
 
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={form.description}
-          onChange={handleChange}
-          className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-        />
+        <div>
+          <label className="block text-sm text-zinc-400 mb-1">
+            Description
+          </label>
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+            rows={3}
+            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <input
-            name="price"
-            type="number"
-            placeholder="Price"
-            value={form.price}
-            onChange={handleChange}
-            className="p-2 rounded bg-zinc-800 border border-zinc-700"
-          />
+          <div>
+            <label className="block text-sm text-zinc-400 mb-1">
+              Price (₱)
+            </label>
+            <input
+              name="price"
+              type="number"
+              value={form.price}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
+            />
+          </div>
 
-          <input
-            name="stock"
-            type="number"
-            placeholder="Stock"
-            value={form.stock}
-            onChange={handleChange}
-            className="p-2 rounded bg-zinc-800 border border-zinc-700"
-          />
+          <div>
+            <label className="block text-sm text-zinc-400 mb-1">Stock</label>
+            <input
+              name="stock"
+              type="number"
+              value={form.stock}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
+            />
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
