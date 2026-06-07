@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, Users, Settings } from "lucide-react";
+import { LayoutDashboard, Package, Tags, Users, Settings } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
@@ -25,7 +25,10 @@ export default function Sidebar() {
           <Package size={20} />
           Products
         </NavLink>
-
+        <NavLink to="/categories" className={navClass}>
+          <Tags size={20} />
+          Categories
+        </NavLink>
         <NavLink to="/suppliers" className={navClass}>
           <Users size={20} />
           Suppliers
