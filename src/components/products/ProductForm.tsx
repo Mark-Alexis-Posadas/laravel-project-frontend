@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Product } from "../../types/product";
 import {
   createProduct,
@@ -12,40 +12,18 @@ interface Props {
   setProducts: (data: Product[]) => void;
 }
 
-export default function ProductForm({
-  selectedProduct,
-  onClose,
-  setProducts,
-}: Props) {
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    price: 0,
-    stock: 0,
+const ProductForm = ({ selectedProduct, onClose, setProducts }: Props) => {
+  const getInitialForm = () => ({
+    name: selectedProduct?.name ?? "",
+    description: selectedProduct?.description ?? "",
+    price: selectedProduct?.price ?? 0,
+    stock: selectedProduct?.stock ?? 0,
   });
 
+  const [form, setForm] = useState(getInitialForm);
   const [submitting, setSubmitting] = useState(false);
 
   const isEdit = !!selectedProduct;
-
-  // fill form when edit
-  useEffect(() => {
-    if (selectedProduct) {
-      setForm({
-        name: selectedProduct.name,
-        description: selectedProduct.description,
-        price: selectedProduct.price,
-        stock: selectedProduct.stock,
-      });
-    } else {
-      setForm({
-        name: "",
-        description: "",
-        price: 0,
-        stock: 0,
-      });
-    }
-  }, [selectedProduct]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -181,4 +159,6 @@ export default function ProductForm({
       </form>
     </div>
   );
-}
+};
+
+export default ProductForm;

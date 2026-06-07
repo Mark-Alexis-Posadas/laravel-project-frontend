@@ -94,6 +94,7 @@ const Products = () => {
 
       {isOpen && (
         <ProductForm
+          key={selectedProduct?.id ?? "new"}
           selectedProduct={selectedProduct}
           onClose={closeForm}
           setProducts={setProducts}
