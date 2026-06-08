@@ -6,18 +6,26 @@ import {
   getProducts,
 } from "../../services/productApi";
 
+import type { Category } from "../../types/category";
 interface Props {
   selectedProduct: Product | null;
   onClose: () => void;
   setProducts: (data: Product[]) => void;
+  categories: Category[];
 }
 
-const ProductForm = ({ selectedProduct, onClose, setProducts }: Props) => {
+const ProductForm = ({
+  selectedProduct,
+  onClose,
+  setProducts,
+  categories,
+}: Props) => {
   const getInitialForm = () => ({
     name: selectedProduct?.name ?? "",
     description: selectedProduct?.description ?? "",
     price: selectedProduct?.price ?? 0,
     stock: selectedProduct?.stock ?? 0,
+    category_id: selectedProduct?.category_id ?? "",
   });
 
   const [form, setForm] = useState(getInitialForm);
@@ -32,7 +40,14 @@ const ProductForm = ({ selectedProduct, onClose, setProducts }: Props) => {
 
     setForm((prev) => ({
       ...prev,
-      [name]: name === "price" || name === "stock" ? Number(value) : value,
+      [name]:
+        name === "price" || name === "stock"
+          ? Number(value)
+          : name === "category_id"
+            ? value === ""
+              ? null
+              : Number(value)
+            : value,
     }));
   };
 
@@ -105,6 +120,25 @@ const ProductForm = ({ selectedProduct, onClose, setProducts }: Props) => {
             rows={3}
             className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm text-zinc-400 mb-1">Category</label>
+
+          <select
+            name="category_id"
+            value={form.category_id}
+            onChange={handleChange}
+            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
+          >
+            <option value="">Select Category</option>
+
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="grid grid-cols-2 gap-4">

@@ -1,26 +1,11 @@
-import axios from "axios";
+import { api } from "./api";
+import type { Product, ProductInput } from "../types/product";
+export const getProducts = () => api.get<Product[]>("/products");
 
-export const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
-});
+export const createProduct = (data: ProductInput) =>
+  api.post<Product>("/products", data);
 
-export const getProducts = () => api.get("/products");
-
-export const createProduct = (data: {
-  name: string;
-  description?: string;
-  price: number;
-  stock: number;
-}) => api.post("/products", [data]);
-
-export const updateProduct = (
-  id: number,
-  data: {
-    name: string;
-    description?: string;
-    price: number;
-    stock: number;
-  },
-) => api.put(`/products/${id}`, data);
+export const updateProduct = (id: number, data: ProductInput) =>
+  api.put<Product>(`/products/${id}`, data);
 
 export const deleteProduct = (id: number) => api.delete(`/products/${id}`);

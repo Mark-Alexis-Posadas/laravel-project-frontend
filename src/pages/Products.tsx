@@ -1,31 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import type { Product } from "../types/product";
 import { getProducts, deleteProduct } from "../services/productApi";
 import ProductForm from "../components/products/ProductForm";
 import useProductForm from "../hooks/useProductForm";
 
+import { useFetch } from "../hooks/useFetch";
+import { getCategories } from "../services/categoryApi";
+
 const Products = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
   const [deleteTarget, setDeleteTarget] = useState<Product | null>(null);
   const [deleting, setDeleting] = useState(false);
   const { isOpen, selectedProduct, openCreate, openEdit, closeForm } =
     useProductForm();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await getProducts();
-        setProducts(res.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const {
+    data: products,
+    setData: setProducts,
+    loading,
+  } = useFetch(getProducts, []);
+  const { data: categories } = useFetch(getCategories, []);
 
   if (loading) {
     return (
@@ -98,6 +91,7 @@ const Products = () => {
           selectedProduct={selectedProduct}
           onClose={closeForm}
           setProducts={setProducts}
+          categories={categories}
         />
       )}
       {deleteTarget && (
